@@ -1,4 +1,12 @@
-# zigbee2mqtt for Catan C1
+# zigbee2mqtt for Catan C1 (PLCnext)
+
+Build your own zigbee2mqtt app image for Phoenix Contact Catan C1
+
+Known issues
+
+- No USB-Support (use LAN coordinator)
+
+![plcNextControl](/docs/img/plcNextControl.png)
 
 ## Build
 
