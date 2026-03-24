@@ -1,0 +1,60 @@
+{
+    "plcnextapp": {
+        "name": "zigbee2mqtt for PLCnext",
+        "identifier": "60002172000987",
+        "version": "{VERSION}",
+        "target": "Catan C1",
+        "minfirmware_version": "26.0.0",
+        "manufacturer": "Koenkk",
+        "licensetype": "Free"
+    },
+    "datastorage": {
+        "persistentdata": true,
+        "temporarydata": false,
+        "directoriesToCreate": {
+            "persistent": [
+                {
+                    "path": "data"
+                }
+            ]
+        }
+    },
+    "ocicontainer": {
+        "environmentVariables": [
+            {
+                "name": "IMAGE_NAME",
+                "value": "{IMAGE_IDENTITY}"
+            },
+            {
+                "name": "IMAGE_TAG",
+                "value": "{VERSION}"
+            },
+            {
+                "name": "FIRST_INGRESS_PORT",
+                "value": "8080"
+            },
+            {
+                "name": "FIRST_OUTGRESS_PORT",
+                "value": "58080"
+            }
+        ],
+        "quadletFiles": [
+            {
+                "type": "Main",
+                "path": "/zigbee2mqtt.container"
+            }
+        ],
+        "images": [
+            {
+                "name": "{IMAGE_IDENTITY}",
+                "id": "{IMAGE_ID}",
+                "path": "/image.tar.gz"
+            }
+        ]
+    },
+    "updateconfigs": { 
+        "autoupdate_enabled": true,
+        "keep_persistentdata": true,
+        "keep_temporarydata": false
+    }
+}

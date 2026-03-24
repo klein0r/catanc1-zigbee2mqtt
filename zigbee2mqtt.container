@@ -1,0 +1,22 @@
+[Unit]
+Description=zigbee2mqtt Container
+Wants=plcnext.service
+After=plcnext.service
+
+# See this file for explanation
+# https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html
+
+[Container]
+ContainerName=zigbee2mqtt-for-plcnext-${APP_ID}
+Image=${IMAGE_NAME}:${IMAGE_TAG}
+Volume=${APP_PERSISTENT_DIR}/data:/app/data
+GroupAdd=keep-groups
+UserNS=keep-id:uid=1001,gid=1002
+PublishPort=${FIRST_OUTGRESS_PORT}:${FIRST_INGRESS_PORT}
+#AddDevice=/dev/...
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
