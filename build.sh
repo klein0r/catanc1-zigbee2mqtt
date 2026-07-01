@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ORG=ghcr.io/koenkk/zigbee2mqtt
-TAG=2.9.1
+TAG=2.12.1
 
 # Fail fast
 set -e
