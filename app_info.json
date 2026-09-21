@@ -5,8 +5,22 @@
         "version": "{VERSION}",
         "target": "Catan C1",
         "minfirmware_version": "26.0.0",
-        "manufacturer": "Koenkk",
-        "licensetype": "Free"
+        "manufacturer": "Koen Kanters (Koenkk)",
+        "licensetype": "Free",
+        "additionalInfo": [
+            {
+                "key": "Documentation link",
+                "value": "Open Documentation",
+                "url": "https://www.zigbee2mqtt.io/guide/getting-started/",
+                "type": "ExternalLink"
+            },
+            {    
+                "key": "Configuration link",
+                "value": "Open Web UI",
+                "url": "8080/",
+                "type": "PortLink"
+            }
+        ]
     },
     "datastorage": {
         "persistentdata": true,
