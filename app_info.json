@@ -17,7 +17,7 @@
             {    
                 "key": "Configuration link",
                 "value": "Open Web UI",
-                "url": "8080/",
+                "url": "58080/",
                 "type": "PortLink"
             }
         ]
