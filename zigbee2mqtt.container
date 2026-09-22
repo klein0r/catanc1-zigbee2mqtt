@@ -13,6 +13,8 @@ Volume=${APP_PERSISTENT_DIR}/data:/app/data
 GroupAdd=keep-groups
 UserNS=keep-id
 PublishPort=${FIRST_OUTGRESS_PORT}:${FIRST_INGRESS_PORT}
+# All devices
+Volume=/dev:/dev:rslave
 #AddDevice=/dev/...
 
 [Service]
