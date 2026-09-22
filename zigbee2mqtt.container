@@ -11,7 +11,7 @@ ContainerName=zigbee2mqtt-for-plcnext-${APP_ID}
 Image=${IMAGE_NAME}:${IMAGE_TAG}
 Volume=${APP_PERSISTENT_DIR}/data:/app/data
 GroupAdd=keep-groups
-UserNS=keep-id:uid=1001,gid=1002
+UserNS=keep-id
 PublishPort=${FIRST_OUTGRESS_PORT}:${FIRST_INGRESS_PORT}
 #AddDevice=/dev/...
 
