@@ -4,7 +4,7 @@
         "identifier": "60002172000987",
         "version": "{VERSION}",
         "target": "Catan C1",
-        "minfirmware_version": "26.0.0",
+        "minfirmware_version": "26.0.3",
         "manufacturer": "Koen Kanters (Koenkk)",
         "licensetype": "Free",
         "additionalInfo": [
