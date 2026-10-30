@@ -41,7 +41,7 @@ jobs:
       - name: Package app
         run: |
           APP=$(ls zigbee2mqtt_*_arm64.app)
-          zip -j "${APP%.app}.zip" "$APP" "${APP%.app}.md5"
+          zip -j "${APP%.app}.zip" "$APP" "${APP%.app}.md5" LICENSE
 
       - name: Attach app to release
         env:
