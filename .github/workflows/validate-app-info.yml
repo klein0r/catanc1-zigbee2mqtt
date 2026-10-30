@@ -1,0 +1,32 @@
+name: Validate app_info.json
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+env:
+  SCHEMA_URL: https://raw.githubusercontent.com/PLCnext/App-Info-Schema/main/app-info-schema.json
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # app_info.json is a template: fill the build-time placeholders with
+      # dummy values that satisfy the schema (e.g. {IMAGE_ID} must be a SHA-256)
+      - name: Render template
+        run: |
+          mkdir -p "$RUNNER_TEMP/app"
+          sed -e "s|{IMAGE_ID}|$(printf '0%.0s' {1..64})|g" \
+              -e "s|{VERSION}|0.0.0|g" \
+              -e "s|{IMAGE_IDENTITY}|ghcr.io/koenkk/zigbee2mqtt|g" \
+              app_info.json > "$RUNNER_TEMP/app/app_info.json"
+
+      - name: Validate against PLCnext App Info Schema
+        run: |
+          pipx run --spec 'check-jsonschema==0.36.2' check-jsonschema \
+            --schemafile "$SCHEMA_URL" \
+            "$RUNNER_TEMP/app/app_info.json"
