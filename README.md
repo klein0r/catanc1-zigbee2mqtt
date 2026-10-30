@@ -13,6 +13,10 @@
 
 - Controller - Catan C1 - 1886438 (Phoenix Contact)
 
+## Persistent data
+
+zigbee2mqtt stores its data (e.g. `configuration.yaml`, `database.db`, `coordinator_backup.json`) on the controller in `/opt/plcnext/apps/home/data/00000001337001/data/`. This directory is kept on app updates. For a backup, stop the app first, so that all files are up to date.
+
 ## USB devices
 
 > [!NOTE]

@@ -38,7 +38,7 @@ There are two kinds of placeholders. Don't mix them up:
 [app_info.json](app_info.json) is the PLCnext app manifest. It declares:
 
 - the version `zigbee2mqtt {IMAGE_TAG} ({VERSION})`, in the PLCnext format `<Name> (<major>.<minor>.<patch>.<build> <state>)`. On updates PLCnext compares only the part in parentheses, so it must be the app version; every zigbee2mqtt bump therefore needs a new app release. `build.sh` only accepts 1 to 4 numeric parts for the app version;
-- the persistent `data` directory, mounted into the container as `/app/data`;
+- the persistent `data` directory, mounted into the container as `/app/data` (on the device: `/opt/plcnext/apps/home/data/00000001337001/data/`);
 - the image and quadlet file paths inside the app (`/image.tar.gz` and `/zigbee2mqtt.container`);
 - the port mapping: container `8080` (zigbee2mqtt web UI) to host `58080`.
 
