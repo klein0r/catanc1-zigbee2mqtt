@@ -51,3 +51,31 @@ jobs:
             zigbee2mqtt_*_arm64.zip \
             --repo "$GITHUB_REPOSITORY" \
             --clobber
+
+      # GPL-3.0 requires pointing to the Corresponding Source of the bundled image
+      - name: Add source code and license notes to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ORG=$(sed -n 's/^ORG=//p' build.sh)
+          TAG=$(sed -n 's/^TAG=//p' build.sh)
+          NOTES="$RUNNER_TEMP/notes.md"
+          gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json body --jq .body > "$NOTES"
+
+          # A re-run must not add the section twice
+          if grep -q '^## Source code and licenses$' "$NOTES"; then
+            exit 0
+          fi
+
+          cat >> "$NOTES" <<EOF
+
+          ## Source code and licenses
+
+          This app bundles the unmodified Docker image \`${ORG}:${TAG}\`.
+
+          - **zigbee2mqtt ${TAG}** is licensed under GPL-3.0. Source code: https://github.com/Koenkk/zigbee2mqtt/tree/${TAG}
+          - **Packaging** (build script, app manifest, Quadlet unit) is licensed under GPL-3.0. Source code: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/${RELEASE_TAG}
+          - The image also contains third-party components under their own licenses: Alpine Linux packages (source: https://gitlab.alpinelinux.org/alpine/aports), Node.js and the npm dependencies of zigbee2mqtt (see \`pnpm-lock.yaml\` in the zigbee2mqtt source). Their source code is available from the respective projects.
+          EOF
+
+          gh release edit "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --notes-file "$NOTES"

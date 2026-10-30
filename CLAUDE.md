@@ -20,7 +20,7 @@ bash build.sh <app version>   # e.g. 1.2.0; a leading "v" is stripped
 
 ## Releases
 
-[release.yml](.github/workflows/release.yml) runs when a GitHub release is published: it calls `build.sh` with the release tag as app version and attaches the `.app`, `.md5` and `LICENSE` to the release, zipped, because GitHub rejects `.app` release assets (HTTP 422). It installs its own Docker via `docker/setup-docker-action` with the containerd image store, because `build.sh` reads `.Identity` from `docker inspect` (Docker >= 29.2) and the runner's preinstalled Docker is older.
+[release.yml](.github/workflows/release.yml) runs when a GitHub release is published: it calls `build.sh` with the release tag as app version and attaches the `.app`, `.md5` and `LICENSE` to the release, zipped, because GitHub rejects `.app` release assets (HTTP 422). It then appends a "Source code and licenses" section to the release notes (GPL-3.0 source pointers for zigbee2mqtt `TAG` and this repo, plus a note on bundled third-party licenses); it skips this if the section already exists, so re-runs are safe. It installs its own Docker via `docker/setup-docker-action` with the containerd image store, because `build.sh` reads `.Identity` from `docker inspect` (Docker >= 29.2) and the runner's preinstalled Docker is older.
 
 ## Updating zigbee2mqtt
 

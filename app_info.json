@@ -5,7 +5,7 @@
         "version": "{VERSION}",
         "target": "Catan C1",
         "minfirmware_version": "26.0.3",
-        "manufacturer": "Koen Kanters (Koenkk)",
+        "manufacturer": "Matthias Kleine (zigbee2mqtt by Koen Kanters)",
         "licensetype": "Free",
         "additionalInfo": [
             {
