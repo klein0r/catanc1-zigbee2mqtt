@@ -2,7 +2,7 @@
     "plcnextapp": {
         "name": "zigbee2mqtt for PLCnext",
         "identifier": "00000001337001",
-        "version": "{VERSION}",
+        "version": "zigbee2mqtt {IMAGE_TAG} ({VERSION})",
         "target": "Catan C1",
         "minfirmware_version": "26.0.3",
         "manufacturer": "Matthias Kleine (zigbee2mqtt by Koen Kanters)",

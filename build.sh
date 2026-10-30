@@ -12,9 +12,11 @@ if [ -z "$TAG" ]; then
     exit 1
 fi
 
-# App version, independent of the zigbee2mqtt version (e.g. the GitHub release tag)
+# App version, independent of the zigbee2mqtt version (e.g. the GitHub release tag).
+# It goes into the parentheses of the manifest version, which is the part
+# PLCnext compares on updates: <major>.<minor>.<patch>.<build> (last three optional)
 VERSION=${1#v}
-if [[ ! "$VERSION" =~ ^[0-9]+(\.[0-9]+)*([-+][0-9A-Za-z.-]+)?$ ]]; then
+if [[ ! "$VERSION" =~ ^[0-9]+(\.[0-9]+){0,3}$ ]]; then
     echo "Usage: $0 <app version>  (e.g. 1.2.0 or v1.2.0)" >&2
     exit 1
 fi
