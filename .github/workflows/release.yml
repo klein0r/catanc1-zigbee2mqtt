@@ -1,0 +1,48 @@
+name: Build and attach app to release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+env:
+  RELEASE_TAG: ${{ github.event.release.tag_name }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # build.sh reads the "Identity" field of 'docker inspect' (Docker >= 29.2),
+      # which is newer than the runner's preinstalled Docker, and relies on the
+      # containerd image store
+      - name: Set up Docker
+        uses: docker/setup-docker-action@v5
+        with:
+          daemon-config: |
+            {
+              "features": {
+                "containerd-snapshotter": true
+              }
+            }
+
+      - name: Install squashfs-tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y squashfs-tools
+
+      - name: Build app
+        run: bash build.sh "$RELEASE_TAG"
+
+      - name: Attach app to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload "$RELEASE_TAG" \
+            zigbee2mqtt_*_arm64.app \
+            zigbee2mqtt_*_arm64.md5 \
+            --repo "$GITHUB_REPOSITORY" \
+            --clobber

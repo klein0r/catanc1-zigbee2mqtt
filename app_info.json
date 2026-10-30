@@ -41,7 +41,7 @@
             },
             {
                 "name": "IMAGE_TAG",
-                "value": "{VERSION}"
+                "value": "{IMAGE_TAG}"
             },
             {
                 "name": "FIRST_INGRESS_PORT",

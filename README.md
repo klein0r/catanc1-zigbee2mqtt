@@ -37,5 +37,9 @@ Path (example):
 
 ```bash
 sudo apt install -y squashfs-tools docker-ce docker-ce-cli
-bash build.sh
+bash build.sh <app version>   # e.g. bash build.sh 1.2.0
 ```
+
+### Release
+
+Publishing a GitHub release (tag e.g. `v1.2.0`) builds the app with that version and attaches the `.app` and `.md5` files to the release.

@@ -22,6 +22,7 @@ jobs:
           mkdir -p "$RUNNER_TEMP/app"
           sed -e "s|{IMAGE_ID}|$(printf '0%.0s' {1..64})|g" \
               -e "s|{VERSION}|0.0.0|g" \
+              -e "s|{IMAGE_TAG}|0.0.0|g" \
               -e "s|{IMAGE_IDENTITY}|ghcr.io/koenkk/zigbee2mqtt|g" \
               app_info.json > "$RUNNER_TEMP/app/app_info.json"
 

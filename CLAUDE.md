@@ -10,16 +10,21 @@ A packaging repo, not application source. It wraps the upstream `ghcr.io/koenkk/
 
 ```bash
 sudo apt install -y squashfs-tools docker-ce docker-ce-cli
-bash build.sh
+bash build.sh <app version>   # e.g. 1.2.0; a leading "v" is stripped
 ```
 
+- The app version is passed as the only argument and is independent of the zigbee2mqtt version (`TAG=` in [build.sh](build.sh)).
 - Build on Linux: `build.sh` uses GNU `sed -i` and `md5sum`, so it fails on macOS as written.
 - Needs Docker >= 25 so that `docker save` emits an OCI archive; the script checks this.
 - Output: `zigbee2mqtt_<VERSION>_arm64.app` and a matching `.md5` in the repo root. Both are gitignored, as is the `app/` staging directory.
 
+## Releases
+
+[release.yml](.github/workflows/release.yml) runs when a GitHub release is published: it calls `build.sh` with the release tag as app version and attaches the `.app` and `.md5` to the release. It installs its own Docker via `docker/setup-docker-action` with the containerd image store, because `build.sh` reads `.Identity` from `docker inspect` (Docker >= 29.2) and the runner's preinstalled Docker is older.
+
 ## Updating zigbee2mqtt
 
-Most commits only bump `TAG=` in [build.sh](build.sh), which sets the upstream image tag. The app version is derived from `TAG`: a tag like `X.Y-Z` becomes `X.Y.Z`, and plain semver passes through unchanged.
+Most commits only bump `TAG=` in [build.sh](build.sh), which sets the upstream image tag. `TAG` goes verbatim into `IMAGE_TAG`; the app version comes from the release tag, not from `TAG`.
 
 ## How the pieces fit together
 
@@ -27,7 +32,7 @@ Most commits only bump `TAG=` in [build.sh](build.sh), which sets the upstream i
 
 There are two kinds of placeholders. Don't mix them up:
 
-- **Build-time, `{CURLY}`**: `{VERSION}`, `{IMAGE_ID}` and `{IMAGE_IDENTITY}`, filled in by `sed` in `build.sh`.
+- **Build-time, `{CURLY}`**: `{VERSION}` (app version), `{IMAGE_TAG}` (zigbee2mqtt image tag), `{IMAGE_ID}` and `{IMAGE_IDENTITY}`, filled in by `sed` in `build.sh`. New placeholders also need a dummy value in [validate-app-info.yml](.github/workflows/validate-app-info.yml).
 - **Runtime, `${SHELL}`**: `${APP_ID}`, `${APP_PERSISTENT_DIR}`, `${IMAGE_NAME}`, `${IMAGE_TAG}`, `${FIRST_INGRESS_PORT}` and `${FIRST_OUTGRESS_PORT}` in [zigbee2mqtt.container](zigbee2mqtt.container). PLCnext fills these in on the device. Some come from the firmware (`APP_ID`, `APP_PERSISTENT_DIR`); the rest come from `ocicontainer.environmentVariables` in [app_info.json](app_info.json).
 
 [app_info.json](app_info.json) is the PLCnext app manifest. It declares:

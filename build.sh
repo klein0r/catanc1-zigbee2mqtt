@@ -6,6 +6,15 @@ TAG=2.14.2
 # Fail fast
 set -e
 
+# App version, independent of the zigbee2mqtt version (e.g. the GitHub release tag)
+VERSION=${1#v}
+if [[ ! "$VERSION" =~ ^[0-9]+(\.[0-9]+)*([-+][0-9A-Za-z.-]+)?$ ]]; then
+    echo "Usage: $0 <app version>  (e.g. 1.2.0 or v1.2.0)" >&2
+    exit 1
+fi
+echo "App version: ${VERSION}"
+echo "zigbee2mqtt version: ${TAG}"
+
 # Disable Docker Advertising
 export DOCKER_CLI_HINTS=false
 
@@ -45,8 +54,8 @@ echo "Image ID: ${IMAGE_ID}"
 sed "s|{IMAGE_ID}|${IMAGE_ID}|g" app_info.json > app/app_info.json
 sed "s|{IMAGE_ID}|${IMAGE_ID}|g" zigbee2mqtt.container > app/zigbee2mqtt.container
 
-VERSION=$(echo "$TAG" | sed -E 's/^([0-9]+\.[0-9]+)-([0-9]+).*/\1.\2/')
 sed -i "s|{VERSION}|${VERSION}|g" app/app_info.json
+sed -i "s|{IMAGE_TAG}|${TAG}|g" app/app_info.json
 
 IMAGE_IDENTITY=$(docker inspect --format "{{(index .Identity.Pull 0).Repository}}" ${ORG}:${TAG})
 sed -i "s|{IMAGE_IDENTITY}|${IMAGE_IDENTITY}|g" app/app_info.json
