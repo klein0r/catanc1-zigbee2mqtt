@@ -42,4 +42,4 @@ bash build.sh <app version>   # e.g. bash build.sh 1.2.0
 
 ### Release
 
-Publishing a GitHub release (tag e.g. `v1.2.0`) builds the app with that version and attaches the `.app` and `.md5` files to the release.
+Publishing a GitHub release (tag e.g. `v1.2.0`) builds the app with that version and attaches a `.zip` with the `.app` and `.md5` files to the release (GitHub does not accept `.app` files as release assets).
