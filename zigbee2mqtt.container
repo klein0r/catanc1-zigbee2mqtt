@@ -10,9 +10,14 @@ After=plcnext.service
 ContainerName=zigbee2mqtt-for-plcnext-${APP_ID}
 Image=${IMAGE_NAME}:${IMAGE_TAG}
 Volume=${APP_PERSISTENT_DIR}/data:/app/data
+# app_user (1001) and plcnext group (1002), see
+# https://github.com/PLCnext/CatanIO/tree/main/apps#permissions
+User=1001:1002
 GroupAdd=keep-groups
 UserNS=keep-id
 PublishPort=${FIRST_OUTGRESS_PORT}:${FIRST_INGRESS_PORT}
+# Use the host's timezone
+Timezone=local
 # All USB devices
 Volume=/dev/usb-devices:/dev/usb-devices:rslave
 

@@ -38,7 +38,7 @@ There are two kinds of placeholders. Don't mix them up:
 
 The `PortLink` URL `"58080/"` must stay in sync with `FIRST_OUTGRESS_PORT`. Keep `identifier` stable, because it identifies the app on the device for updates.
 
-[zigbee2mqtt.container](zigbee2mqtt.container) is a Podman Quadlet unit; see the [podman-systemd.unit docs](https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html). USB coordinators are passed through by bind-mounting `/dev/usb-devices` with `rslave` propagation, together with `GroupAdd=keep-groups` and `UserNS=keep-id`. Users point zigbee2mqtt at a path under `/dev/usb-devices/symlinks/...`.
+[zigbee2mqtt.container](zigbee2mqtt.container) is a Podman Quadlet unit; see the [podman-systemd.unit docs](https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html). USB coordinators are passed through by bind-mounting `/dev/usb-devices` with `rslave` propagation, together with `User=1001:1002` (`app_user`:`plcnext`, as the [CatanIO app docs](https://github.com/PLCnext/CatanIO/tree/main/apps) require for store apps), `GroupAdd=keep-groups` and `UserNS=keep-id`. Users point zigbee2mqtt at a path under `/dev/usb-devices/symlinks/...`.
 
 ## Constraints
 
