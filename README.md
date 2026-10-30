@@ -13,9 +13,11 @@
 
 - Controller - Catan C1 - 1886438 (Phoenix Contact)
 
-## Persistent data
+## Usage
 
-zigbee2mqtt stores its data (e.g. `configuration.yaml`, `database.db`, `coordinator_backup.json`) on the controller in `/opt/plcnext/apps/home/data/00000001337001/data/`. This directory is kept on app updates. For a backup, stop the app first, so that all files are up to date.
+- Web UI: `http://<ip of the Catan C1>:58080/`
+- On first start (no `configuration.yaml` yet), zigbee2mqtt shows its onboarding page there. Enter your MQTT broker (e.g. Mosquitto) and the USB adapter (see [USB devices](#usb-devices)). Keep the frontend enabled on port `8080` (the default), which the app maps to `58080`. If the onboarding page then forwards you to `localhost` or port `8080`, open `http://<ip of the Catan C1>:58080/` yourself.
+- Persistent data on the controller: `/opt/plcnext/apps/home/data/00000001337001/data/` (e.g. `configuration.yaml`, `database.db`, `coordinator_backup.json`). This directory is kept on app updates. For a backup, stop the app first, so that all files are up to date.
 
 ## USB devices
 
