@@ -13,18 +13,18 @@ sudo apt install -y squashfs-tools docker-ce docker-ce-cli
 bash build.sh <app version>   # e.g. 1.2.0; a leading "v" is stripped
 ```
 
-- The app version is passed as the only argument and is independent of the zigbee2mqtt version (`TAG=` in [build.sh](build.sh)).
+- The app version is passed as the only argument and is independent of the zigbee2mqtt version in [ZIGBEE2MQTT_VERSION](ZIGBEE2MQTT_VERSION).
 - Build on Linux: `build.sh` uses GNU `sed -i` and `md5sum`, so it fails on macOS as written.
 - Needs Docker >= 25 so that `docker save` emits an OCI archive; the script checks this.
 - Output: `zigbee2mqtt_<VERSION>_arm64.app` and a matching `.md5` in the repo root. Both are gitignored, as is the `app/` staging directory.
 
 ## Releases
 
-[release.yml](.github/workflows/release.yml) runs when a GitHub release is published: it calls `build.sh` with the release tag as app version and attaches the `.app`, `.md5` and `LICENSE` to the release, zipped, because GitHub rejects `.app` release assets (HTTP 422). It then appends a "Source code and licenses" section to the release notes (GPL-3.0 source pointers for zigbee2mqtt `TAG` and this repo, plus a note on bundled third-party licenses); it skips this if the section already exists, so re-runs are safe. It installs its own Docker via `docker/setup-docker-action` with the containerd image store, because `build.sh` reads `.Identity` from `docker inspect` (Docker >= 29.2) and the runner's preinstalled Docker is older.
+[release.yml](.github/workflows/release.yml) runs when a GitHub release is published: it calls `build.sh` with the release tag as app version and attaches the `.app`, `.md5` and `LICENSE` to the release, zipped, because GitHub rejects `.app` release assets (HTTP 422). It then appends a "Source code and licenses" section to the release notes (GPL-3.0 source pointers for the zigbee2mqtt version and this repo, plus a note on bundled third-party licenses); it skips this if the section already exists, so re-runs are safe. It installs its own Docker via `docker/setup-docker-action` with the containerd image store, because `build.sh` reads `.Identity` from `docker inspect` (Docker >= 29.2) and the runner's preinstalled Docker is older.
 
 ## Updating zigbee2mqtt
 
-Most commits only bump `TAG=` in [build.sh](build.sh), which sets the upstream image tag. `TAG` goes verbatim into `IMAGE_TAG`; the app version comes from the release tag, not from `TAG`.
+Most commits only bump the upstream image tag in [ZIGBEE2MQTT_VERSION](ZIGBEE2MQTT_VERSION) (just the tag, e.g. `2.14.2`). `build.sh` reads it into `TAG`, which goes verbatim into `IMAGE_TAG`; the app version comes from the release tag, not from this file.
 
 ## How the pieces fit together
 

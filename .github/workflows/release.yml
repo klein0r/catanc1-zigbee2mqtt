@@ -58,7 +58,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           ORG=$(sed -n 's/^ORG=//p' build.sh)
-          TAG=$(sed -n 's/^TAG=//p' build.sh)
+          TAG=$(tr -d '[:space:]' < ZIGBEE2MQTT_VERSION)
           NOTES="$RUNNER_TEMP/notes.md"
           gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json body --jq .body > "$NOTES"
 

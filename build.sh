@@ -1,10 +1,16 @@
 #!/bin/bash
 
 ORG=ghcr.io/koenkk/zigbee2mqtt
-TAG=2.14.2
 
 # Fail fast
 set -e
+
+# zigbee2mqtt image tag
+TAG=$(tr -d '[:space:]' < ZIGBEE2MQTT_VERSION)
+if [ -z "$TAG" ]; then
+    echo "Error: ZIGBEE2MQTT_VERSION is empty" >&2
+    exit 1
+fi
 
 # App version, independent of the zigbee2mqtt version (e.g. the GitHub release tag)
 VERSION=${1#v}
