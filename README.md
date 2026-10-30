@@ -2,12 +2,16 @@
 
 [zigbee2mqtt](https://github.com/Koenkk/zigbee2mqtt) app image for **Phoenix Contact Catan C1**
 
-## Build
+> [!WARNING]
+> This is an unofficial community project. It is not affiliated with, endorsed by, or supported by Phoenix Contact.
+> No support is provided. Use at your own risk; the software comes without any warranty (see [LICENSE](LICENSE)).
 
-```bash
-sudo apt install -y squashfs-tools docker-ce docker-ce-cli
-bash build.sh
-```
+- Firm Code `0000000`
+- Product Codes `1337001`
+
+## Supported Devices
+
+- Controller - Catan C1 - 1886438 (Phoenix Contact)
 
 ## USB devices
 
@@ -26,3 +30,12 @@ Path (example):
 ## Known issues
 
 - No support for ch340/ch341 chipsets
+
+## Dev
+
+### Build
+
+```bash
+sudo apt install -y squashfs-tools docker-ce docker-ce-cli
+bash build.sh
+```

@@ -1,7 +1,7 @@
 {
     "plcnextapp": {
         "name": "zigbee2mqtt for PLCnext",
-        "identifier": "60002172000987",
+        "identifier": "00000001337001",
         "version": "{VERSION}",
         "target": "Catan C1",
         "minfirmware_version": "26.0.3",
